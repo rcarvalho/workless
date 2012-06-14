@@ -9,7 +9,8 @@ module Delayed
         extend Delayed::Workless::Scaler::HerokuClient
 
         def self.up
-          client.set_workers(ENV['APP_NAME'], 1) if self.workers == 0
+          nw = self.calculate_num_workers
+          client.set_workers(ENV['APP_NAME'], nw) if nw
         end
 
         def self.down

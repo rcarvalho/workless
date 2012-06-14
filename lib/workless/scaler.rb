@@ -35,6 +35,7 @@ module Delayed
         def scaler=(scaler)
           @scaler = "Delayed::Workless::Scaler::#{scaler.to_s.camelize}".constantize
         end
+        
       end
       
     end
