@@ -14,7 +14,8 @@ module Delayed
         end
 
         def self.down
-          client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => 0) unless self.workers == 0 or self.jobs.count > 0
+          nw = self.calculate_num_workers
+          client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => nw) unless self.workers == 0 or self.jobs.count > 0
         end
 
         def self.workers

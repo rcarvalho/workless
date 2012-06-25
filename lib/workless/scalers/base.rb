@@ -21,6 +21,8 @@ module Delayed
               return 2 unless num_workers > 1
             elsif job_count > 0
               return 1 unless num_workers > 0
+            else
+              return 0
             end
           end
         end

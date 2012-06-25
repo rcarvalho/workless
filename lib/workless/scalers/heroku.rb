@@ -14,7 +14,8 @@ module Delayed
         end
 
         def self.down
-          client.set_workers(ENV['APP_NAME'], 0) unless self.workers == 0 or self.jobs.count > 0
+          nw = self.calculate_num_workers
+          client.set_workers(ENV['APP_NAME'], nw) unless self.workers == 0 or self.jobs.count > 0
         end
 
         def self.workers
