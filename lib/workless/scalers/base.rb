@@ -19,7 +19,7 @@ module Delayed
               return 3 unless num_workers > 2
             elsif job_count > 50
               return 2 unless num_workers > 1
-            elsif job_count > 0
+            elsif job_count > 1
               return 1 unless num_workers > 0
             else
               return 0
