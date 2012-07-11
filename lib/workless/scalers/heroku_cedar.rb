@@ -9,6 +9,7 @@ module Delayed
         extend Delayed::Workless::Scaler::HerokuClient
 
         def self.up
+          @@current_num_workers || 0
           nw = self.calculate_num_workers
           if nw
             if @@current_num_workers != nw
@@ -20,6 +21,7 @@ module Delayed
         end
 
         def self.down
+          @@current_num_workers || 0
           nw = self.calculate_num_workers
           if nw
             if @@current_num_workers != nw
@@ -31,6 +33,7 @@ module Delayed
         end
 
         def self.workers
+          @@current_num_workers || 0
           @@current_num_workers || client.ps(ENV['APP_NAME']).count { |p| p["process"] =~ /worker\.\d?/ }
         end
 
