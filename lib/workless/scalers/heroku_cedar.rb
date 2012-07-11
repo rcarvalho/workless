@@ -10,18 +10,28 @@ module Delayed
 
         def self.up
           nw = self.calculate_num_workers
-          client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => nw) if nw
+          if nw
+            if @@current_num_workers != nw
+              @@current_num_workers = nw
+              client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => @@current_num_workers) 
+            end
+          end
         rescue
         end
 
         def self.down
           nw = self.calculate_num_workers
-          client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => nw) unless self.workers == 0 or self.jobs.count > 0
+          if nw
+            if @@current_num_workers != nw
+              @@current_num_workers = nw
+              client.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => nw)
+            end
+          end          
         rescue
         end
 
         def self.workers
-          client.ps(ENV['APP_NAME']).count { |p| p["process"] =~ /worker\.\d?/ }
+          @@current_num_workers || client.ps(ENV['APP_NAME']).count { |p| p["process"] =~ /worker\.\d?/ }
         end
 
       end
