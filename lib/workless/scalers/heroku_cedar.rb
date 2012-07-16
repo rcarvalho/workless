@@ -10,7 +10,6 @@ module Delayed
 
         def self.up
           nw = self.calculate_num_workers
-          puts "Workless#up #{nw}"
           if nw
             if self.num_workers_cache != nw
               self.num_workers_cache = nw
@@ -22,7 +21,6 @@ module Delayed
 
         def self.down
           nw = self.calculate_num_workers
-          puts "Workless#down #{nw}"
           if nw
             if self.num_workers_cache != nw
               self.num_workers_cache = nw
@@ -31,6 +29,10 @@ module Delayed
           end          
         rescue
         end
+      end
+
+      def self.workers
+        client.ps(ENV['APP_NAME']).count { |p| p["process"] =~ /worker\.\d?/ }
       end
 
     end

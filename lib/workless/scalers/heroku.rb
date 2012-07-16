@@ -29,6 +29,11 @@ module Delayed
           end          
         rescue
         end
+
+        def self.workers
+          client.info(ENV['APP_NAME'])[:workers].to_i
+        end
+
       end
 
     end
