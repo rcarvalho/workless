@@ -10,6 +10,7 @@ module Delayed
 
         def self.up
           nw = self.calculate_num_workers
+          puts "Workless#up #{nw}"
           if nw
             if self.num_workers_cache != nw
               self.num_workers_cache = nw
@@ -21,6 +22,7 @@ module Delayed
 
         def self.down
           nw = self.calculate_num_workers
+          puts "Workless#down #{nw}"
           if nw
             if self.num_workers_cache != nw
               self.num_workers_cache = nw
@@ -29,11 +31,6 @@ module Delayed
           end          
         rescue
         end
-
-        def self.workers
-          self.num_workers_cache
-        end
-
       end
 
     end

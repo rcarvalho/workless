@@ -21,7 +21,7 @@ module Delayed
           Rails.cache.write("WORKLESS_NUM_WORKERS", num)
         end
         
-        def self.calculate_num_workers
+        def self.calculate_num_workers up=false
           num_jobs = self.jobs.count
           @@scale_info ||= {
             0 => 0,
@@ -29,7 +29,15 @@ module Delayed
             500 => 2,
             1000 => 3
           }
-          scale_key = @@scale_info.keys.reverse.select{|v| v <= num_jobs }.first
+          scale_key = nil
+          if up
+            scale_key = @@scale_info.keys.select{|v| v > num_jobs }.first
+            scale_key ||= @@scale_info.keys.last
+          else
+            scale_key = @@scale_info.keys.select{|v| v > num_jobs }.first
+            scale_key = 0 if num_jobs == 0 # special case
+          end
+          
           if scale_key.nil?
             return 0
           else

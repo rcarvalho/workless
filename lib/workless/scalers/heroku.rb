@@ -10,20 +10,25 @@ module Delayed
 
         def self.up
           nw = self.calculate_num_workers
-          client.set_workers(ENV['APP_NAME'], nw) if nw
+          if nw
+            if self.num_workers_cache != nw
+              self.num_workers_cache = nw
+              client.set_workers(ENV['APP_NAME'], nw)
+            end
+          end
         rescue          
         end
 
         def self.down
           nw = self.calculate_num_workers
-          client.set_workers(ENV['APP_NAME'], nw) unless self.workers == 0 or self.jobs.count > 0
+          if nw
+            if self.num_workers_cache != nw
+              self.num_workers_cache = nw
+              client.set_workers(ENV['APP_NAME'], nw)
+            end
+          end          
         rescue
         end
-
-        def self.workers
-          client.info(ENV['APP_NAME'])[:workers].to_i
-        end
-
       end
 
     end
