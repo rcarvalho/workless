@@ -5,17 +5,17 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rcarvalho-workless}
-  s.version = "1.0.2.18"
+  s.version = "1.0.2.20"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if s.respond_to? :required_rubygems_version=
-  s.authors = ["lostboy"]
-  s.date = %q{2011-06-30}
+  s.authors = ["lostboy", "rcarvalho"]
+  s.date = %q{2012-07-18}
   s.description = %q{Extension to Delayed Job to enable workers to scale up when needed}
-  s.email = %q{paul.crabtree@gmail.com}
+  s.email = %q{i@rodneyc.me}
   
   s.files = Dir.glob("{rails,lib}/**/*") + %w(LICENSE README.md )
   
-  s.homepage = %q{http://github.com/lostboy/workless}
+  s.homepage = %q{http://github.com/rcarvalho/workless}
   s.require_paths = ["lib"]
   s.summary = %q{Use delayed job workers only when theyre needed on Heroku}
 

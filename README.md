@@ -9,7 +9,7 @@ By adding the gem to your project and configuring our Heroku app with some confi
 
 ## Update
 
-Version 1.0.2.* is released by rcarvalho - added ability to scale workers to a desired number.  Also, improved performance by reducing the number of calls to the Heroku API and storing the current number of workers in memcached.  Of course, now you have to have caching in your app to
+Version 1.0.2.* is released by rcarvalho.  Added ability to scale workers to a desired number.  Also, improved performance by reducing the number of calls to the Heroku API and storing the current number of workers in memcached.  Of course, now you have to have caching in your app to
 utilize this branch.
 
 ## Compatibility
@@ -88,7 +88,8 @@ The local scaler uses @adamwiggins rush library http://github.com/adamwiggins/ru
 
 The heroku scaler works on the Aspen and Bamboo stacks while the heroku_cedar scaler only works on the new Cedar stack.
 
-To configure the number of workers in your environment file add the following:
+To configure the number of workers in your environment file add the following.  The values below
+is the default scaling scheme.
 
 <pre>
 Delayed::Job.scaler.scale_info = { 	
