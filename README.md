@@ -9,7 +9,8 @@ By adding the gem to your project and configuring our Heroku app with some confi
 
 ## Update
 
-Version 1.0.0 has been released, this brings compatibility with delayed_job 3 and compatibility with Rails 2.3.x and up.
+Version 1.0.2.* is released by rcarvalho - added ability to scale workers to a desired number.  Also, improved performance by reducing the number of calls to the Heroku API and storing the current number of workers in memcached.  Of course, now you have to have caching in your app to
+utilize this branch.
 
 ## Compatibility
 
@@ -86,6 +87,17 @@ Delayed::Job.scaler = :local
 The local scaler uses @adamwiggins rush library http://github.com/adamwiggins/rush to start and stop workers on a local machine
 
 The heroku scaler works on the Aspen and Bamboo stacks while the heroku_cedar scaler only works on the new Cedar stack.
+
+To configure the number of workers in your environment file add the following:
+
+<pre>
+Delayed::Job.scaler.scale_info = { 	
+									0 => 0,
+            						100 => 1,
+            						500 => 2,
+            						1000 => 3
+          						  }
+</pre>
 
 ## Note on Patches/Pull Requests
  
